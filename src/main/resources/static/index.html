@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register, Login & Chat</title>
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css">-->
+    <link rel="stylesheet" href="css/lib/tailwind.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Include SockJS Client Library -->
+<!--    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.0/dist/sockjs.min.js"></script>-->
+<!--    &lt;!&ndash; Include Stomp.js &ndash;&gt;-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>-->
+    <!-- Your main JavaScript file -->
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f7fafc;
+        }
+        /* Sections for transitions */
+        .register-container, .login-container, .chat-container {
+            display: none;
+        }
+        .show-register .register-container,
+        .show-login .login-container,
+        .show-chat .chat-container {
+            display: block;
+        }
+    </style>
+</head>
+<body class="show-register">
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Registration Container -->
+    <div class="register-container bg-white p-8 rounded-lg shadow-lg w-full max-w-md" id = "registrationForm">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">Register</h1>
+        <form action="#" class="space-y-6">
+            <div>
+                <label for="firstName" class="block text-gray-700 font-bold">First Name</label>
+                <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name"
+                       class="border rounded w-full py-3 px-4 mt-2 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500">
+            </div>
+            <div>
+                <label for="lastName" class="block text-gray-700 font-bold">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required placeholder="Enter your last name"
+                       class="border rounded w-full py-3 px-4 mt-2 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500">
+            </div>
+            <div>
+                <label for="email" class="block text-gray-700 font-bold">Email</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email"
+                       class="border rounded w-full py-3 px-4 mt-2 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500">
+            </div>
+            <div>
+                <label for="password" class="block text-gray-700 font-bold">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password"
+                       class="border rounded w-full py-3 px-4 mt-2 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500">
+            </div>
+            <button type="submit"  id = "registerBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 w-full rounded focus:outline-none focus:ring focus:ring-blue-200"
+                    >
+                Register
+            </button>
+            <p class="text-gray-500 mt-4 text-center">
+                Already registered?
+                <a href="#" class="text-blue-500 hover:underline" id = "registrationFormLoginBtn">Log in</a>
+            </p>
+        </form>
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-container bg-white p-8 rounded-lg shadow-lg w-full max-w-md" id = "loginForm" style="display: none">
+        <h1 class="text-3xl font-bold mb-6 text-gray-800 text-center">Login</h1>
+        <form action="#" class="space-y-6">
+            <div>
+                <label for="emailLoginForm" class="block text-gray-700 font-bold">Email</label>
+                <input type="email" id="emailLoginForm" name="emailLoginForm" required placeholder="Enter your email"
+                       class="border rounded w-full py-3 px-4 mt-2 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500">
+            </div>
+            <div>
+                <label for="passwordLoginForm" class="block text-gray-700 font-bold">Password</label>
+                <input type="password" id="passwordLoginForm" name="passwordLoginForm" required placeholder="Enter your password"
+                       class="border rounded w-full py-3 px-4 mt-2 text-gray-700 leading-tight focus:outline-none focus:ring focus:border-blue-500">
+            </div>
+            <button type="submit" class="loginFormLoginBtn bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 w-full rounded focus:outline-none focus:ring focus:ring-blue-200 " id="loginFormLoginBtn"
+                    >
+                Login
+            </button>
+            <p class="text-gray-500 mt-4 text-center">
+                New user?
+                <a href="#" class="text-blue-500 hover:underline" id="loginFormRegisterBtn" >Register</a>
+            </p>
+        </form>
+    </div>
+
+    <!-- Chat Container -->
+    <div class="chat-container w-full max-w-6xl bg-white p-8 rounded-lg shadow-lg flex" id = "mainChatSection" style="display: none">
+        <!-- Sidebar for Group List -->
+        <div class="w-1/3 p-4 border-r border-gray-300">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Your Groups</h2>
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded mb-4 focus:outline-none focus:ring focus:ring-blue-200" id="chatContainerAddGroup">
+                + Add New Group
+            </button>
+            <ul class="space-y-2" id="groupList">
+                <!-- Group items will be dynamically populated here -->
+            </ul>
+        </div>
+
+        <!-- Main Chat Section -->
+        <div class="w-2/3 p-4 flex flex-col">
+            <div class="flex justify-between items-center mb-4 border-b border-gray-300 pb-2">
+                <h2 class="text-xl font-bold text-gray-800" id = "groupName"></h2>
+                <h2 class="text-lg font-bold text-gray-800" id = "userName"></h2>
+            </div>
+
+            <!-- Chat Messages -->
+<!--            <div class="flex-grow p-4 bg-gray-100 rounded mb-4 overflow-y-auto" id="chatMessages">-->
+<!--                &lt;!&ndash; This area is intentionally left empty for now &ndash;&gt;-->
+<!--            </div>-->
+            <div class="flex-grow p-4 bg-gray-100 rounded mb-4 overflow-y-auto" id="chatMessages">
+                <ul id="messageList">
+                    <!-- Messages will be dynamically populated here -->
+                </ul>
+            </div>
+
+
+            <!-- Message Input -->
+            <div class="flex items-center border-t border-gray-300 pt-2">
+                <input type="text" id="messageInput" placeholder="Type a message..." class="border rounded-l-lg py-3 px-4 w-full focus:outline-none focus:ring focus:border-blue-300">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-r-lg focus:outline-none focus:ring focus:ring-blue-200" id="sendMessage">
+                    Send
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/lib/main.js"></script>
+<script src="js/lib/stomp.umd.min.js"></script>
+<script src="js/lib/sockjs.min.js"></script>
+<script src="js/lib/stomp.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: chatapp
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/chat_group
+    username: root
+    password: engbanda.com
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+server:
+  port: 8080

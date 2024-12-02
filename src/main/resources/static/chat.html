@@ -1,0 +1,34 @@
+<!-- Chat Container -->
+<div class="chat-container w-full max-w-6xl bg-white p-8 rounded-lg shadow-lg flex">
+    <!-- Sidebar for Group List -->
+    <div class="w-1/3 p-4 border-r border-gray-300">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">Your Groups</h2>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 w-full rounded mb-4 focus:outline-none focus:ring focus:ring-blue-200">
+            + Add New Group
+        </button>
+        <ul class="space-y-2" id="groupList">
+            <!-- Group items will be dynamically populated here -->
+        </ul>
+    </div>
+
+    <!-- Main Chat Section -->
+    <div class="w-2/3 p-4 flex flex-col">
+        <div class="flex justify-between items-center mb-4 border-b border-gray-300 pb-2">
+            <h2 class="text-xl font-bold text-gray-800">Group: <span id="groupName">Group 1</span></h2>
+            <h2 class="text-lg font-bold text-gray-800">User: <span id="userName">User Name</span></h2>
+        </div>
+
+        <!-- Chat Messages -->
+        <div class="flex-grow p-4 bg-gray-100 rounded mb-4 overflow-y-auto" id="chatMessages">
+            <!-- This area is intentionally left empty for now -->
+        </div>
+
+        <!-- Message Input -->
+        <div class="flex items-center border-t border-gray-300 pt-2">
+            <input type="text" id="messageInput" placeholder="Type a message..." class="border rounded-l-lg py-3 px-4 w-full focus:outline-none focus:ring focus:border-blue-300">
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-r-lg focus:outline-none focus:ring focus:ring-blue-200">
+                Send
+            </button>
+        </div>
+    </div>
+</div>
